@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context="com.example.invisible.timetable.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linLay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnToStudentsActivity"
+        android:layout_alignLeft="@+id/btnToStudentsActivity"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnToStudentsActivity"
+        android:layout_alignStart="@+id/btnToStudentsActivity">
+
+        <Button
+            android:id="@+id/btnToScheduleActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_schedule" />
+
+        <Button
+            android:id="@+id/btnClearGeneralSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_delete" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnToStudentsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnShowTimetable"
+        android:layout_alignLeft="@+id/btnShowTimetable"
+        android:layout_alignRight="@+id/btnShowTimetable"
+        android:layout_alignStart="@+id/btnShowTimetable"
+        android:layout_below="@+id/linLay1"
+        android:text="@string/students" />
+
+    <Button
+        android:id="@+id/btnShowTimetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnToStudentsActivity"
+        android:text="@string/formatschedule" />
+
+</RelativeLayout>

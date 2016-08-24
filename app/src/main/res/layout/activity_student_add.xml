@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".StudentAdd">
+
+    <EditText
+        android:id="@+id/dtSurname"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:digits="@string/allowed_chars"
+        android:ems="10"
+        android:hint="@string/surname_name"
+        android:inputType="textPersonName"
+        android:maxLength="20" />
+
+    <TextView
+        android:id="@+id/tvSpec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvPractice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/tvPractice"
+        android:layout_below="@+id/dtSurname"
+        android:text="@string/tvSpecHours"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvPractice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvSpec"
+        android:layout_marginTop="26dp"
+        android:text="@string/hours_ped_pr"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/spinnerCpec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvPractice"
+        android:layout_alignEnd="@+id/dtSurname"
+        android:layout_alignRight="@+id/dtSurname"
+        android:layout_alignTop="@+id/tvSpec"
+        android:layout_toRightOf="@+id/tvSpec"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/spinnerPractice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvPractice"
+        android:layout_alignEnd="@+id/dtSurname"
+        android:layout_alignRight="@+id/dtSurname"
+        android:layout_alignTop="@+id/tvPractice"
+        android:layout_toRightOf="@+id/tvPractice"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/btn_student_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/spinnerCourse"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/spinnerCourse"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="30dp"
+        android:text="@string/add" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvPractice"
+        android:layout_marginTop="26dp"
+        android:text="@string/course"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/spinnerCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignEnd="@+id/spinnerPractice"
+        android:layout_alignRight="@+id/spinnerPractice"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toRightOf="@+id/tvPractice"
+        android:spinnerMode="dropdown" />
+
+</RelativeLayout>

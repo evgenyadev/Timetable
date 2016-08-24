@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".EditDaySchedule">
+
+    <Button
+        android:id="@+id/btn_lesson_1_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStudentEdit"
+        android:layout_alignStart="@+id/tvStudentEdit"
+        android:layout_below="@+id/tvStudentEdit"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_08_30_09_15" />
+
+    <Button
+        android:id="@+id/btn_lesson_1_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStudentEdit"
+        android:layout_toEndOf="@+id/btn_lesson_1_1"
+        android:layout_toRightOf="@+id/btn_lesson_1_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_09_20_10_05" />
+
+    <TextView
+        android:id="@+id/tvStudentEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/student_info"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/btn_lesson_2_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_lesson_1_1"
+        android:layout_alignStart="@+id/btn_lesson_1_1"
+        android:layout_below="@+id/btn_lesson_1_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_10_20_11_05" />
+
+    <Button
+        android:id="@+id/btn_lesson_2_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lesson_1_2"
+        android:layout_toEndOf="@+id/btn_lesson_2_1"
+        android:layout_toRightOf="@+id/btn_lesson_2_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_11_10_11_55" />
+
+    <Button
+        android:id="@+id/btn_lesson_3_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_lesson_2_1"
+        android:layout_alignStart="@+id/btn_lesson_2_1"
+        android:layout_below="@+id/btn_lesson_2_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_12_10_12_55" />
+
+    <Button
+        android:id="@+id/btn_lesson_3_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lesson_2_2"
+        android:layout_toEndOf="@+id/btn_lesson_3_1"
+        android:layout_toRightOf="@+id/btn_lesson_3_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_13_00_13_45" />
+
+    <Button
+        android:id="@+id/btn_lesson_4_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_lesson_3_1"
+        android:layout_alignStart="@+id/btn_lesson_3_1"
+        android:layout_below="@+id/btn_lesson_3_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_14_10_14_55" />
+
+    <Button
+        android:id="@+id/btn_lesson_4_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lesson_3_2"
+        android:layout_toEndOf="@+id/btn_lesson_4_1"
+        android:layout_toRightOf="@+id/btn_lesson_4_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_15_00_15_45" />
+
+    <Button
+        android:id="@+id/btn_lesson_5_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_lesson_4_1"
+        android:layout_alignStart="@+id/btn_lesson_4_1"
+        android:layout_below="@+id/btn_lesson_4_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_15_55_16_40" />
+
+    <Button
+        android:id="@+id/btn_lesson_5_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lesson_4_2"
+        android:layout_toEndOf="@+id/btn_lesson_5_1"
+        android:layout_toRightOf="@+id/btn_lesson_5_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_16_45_17_30" />
+
+    <Button
+        android:id="@+id/btn_lesson_6_1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_lesson_5_1"
+        android:layout_alignStart="@+id/btn_lesson_5_1"
+        android:layout_below="@+id/btn_lesson_5_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_17_30_18_15" />
+
+    <Button
+        android:id="@+id/btn_lesson_6_2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_lesson_5_2"
+        android:layout_toEndOf="@+id/btn_lesson_6_1"
+        android:layout_toRightOf="@+id/btn_lesson_6_1"
+        android:background="@android:color/holo_green_dark"
+        android:minHeight="30dp"
+        android:minWidth="100dp"
+        android:text="@string/_18_20_19_05" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_1_1"
+        android:layout_toLeftOf="@+id/btn_lesson_1_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_2_1"
+        android:layout_toLeftOf="@+id/btn_lesson_2_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_3_1"
+        android:layout_toLeftOf="@+id/btn_lesson_3_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_3"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_4_1"
+        android:layout_toLeftOf="@+id/btn_lesson_4_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_4"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_5_1"
+        android:layout_toLeftOf="@+id/btn_lesson_5_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_5"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_lesson_6_1"
+        android:layout_toLeftOf="@+id/btn_lesson_6_1"
+        android:layout_toStartOf="@+id/btn_lesson_1_1"
+        android:text="@string/_6"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+</RelativeLayout>
