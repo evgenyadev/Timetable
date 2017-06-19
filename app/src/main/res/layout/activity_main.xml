@@ -10,41 +10,50 @@
         android:id="@+id/linLay1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btnToStudentsActivity"
-        android:layout_alignLeft="@+id/btnToStudentsActivity"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/btnToStudentsActivity"
-        android:layout_alignStart="@+id/btnToStudentsActivity">
+        android:layout_alignParentTop="true">
 
         <Button
             android:id="@+id/btnToScheduleActivity"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/all_schedule" />
-
-        <Button
-            android:id="@+id/btnClearGeneralSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnToStudentsActivity"
+    <LinearLayout
+        android:id="@+id/linLay2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btnShowTimetable"
-        android:layout_alignLeft="@+id/btnShowTimetable"
-        android:layout_alignRight="@+id/btnShowTimetable"
-        android:layout_alignStart="@+id/btnShowTimetable"
         android:layout_below="@+id/linLay1"
-        android:text="@string/students" />
+        android:layout_alignRight="@+id/linLay1"
+        android:layout_alignEnd="@+id/linLay1"
+        android:layout_alignLeft="@+id/linLay1"
+        android:layout_alignStart="@+id/linLay1">
+
+        <Button
+            android:id="@+id/btnToStudentsActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/students" />
+
+        <Button
+            android:id="@+id/btnToSenseiSchedule"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/self_sched" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btnShowTimetable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnToStudentsActivity"
-        android:text="@string/formatschedule" />
+        android:layout_below="@+id/linLay2"
+        android:text="@string/formatschedule"
+        android:layout_alignRight="@+id/linLay2"
+        android:layout_alignEnd="@+id/linLay2"
+        android:layout_alignLeft="@+id/linLay2"
+        android:layout_alignStart="@+id/linLay2" />
 
 </RelativeLayout>

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.invisible.timetable.database.DBHelper;
+
 import java.util.ArrayList;
 
 /**
@@ -18,14 +20,13 @@ import java.util.ArrayList;
  */
 
 public class StudentAdd extends AppCompatActivity implements View.OnClickListener {
-    String[] spinData = {"0", "1", "2", "3", "4"};
-    String[] spinDataCourse = {"I", "II", "III", "IV"};
-    Spinner spinnerSpec;
-    Spinner spinnerPractice;
-    Spinner spinnerCourse;
-    Button btn_student_add;
-    EditText dtSurname;
-    DBHelper dbHelper;
+    private final String[] spinData = {"0", "1", "2", "3", "4"};
+    private final String[] spinDataCourse = {"I", "II", "III", "IV"};
+    private Spinner spinnerSpec;
+    private Spinner spinnerPractice;
+    private Spinner spinnerCourse;
+    private EditText dtSurname;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class StudentAdd extends AppCompatActivity implements View.OnClickListene
         spinnerSpec = (Spinner) findViewById(R.id.spinnerCpec);
         spinnerPractice = (Spinner) findViewById(R.id.spinnerPractice);
         spinnerCourse = (Spinner) findViewById(R.id.spinnerCourse);
-        btn_student_add = (Button) findViewById(R.id.btn_student_add);
+        Button btn_student_add = (Button) findViewById(R.id.btn_student_add);
         dtSurname = (EditText) findViewById(R.id.dtSurname);
 
         btn_student_add.setOnClickListener(this);
@@ -68,7 +69,7 @@ public class StudentAdd extends AppCompatActivity implements View.OnClickListene
         }
 
         // если студент с таким именем уже создан - выйти
-        ArrayList<String> names = dbHelper.fetchAllStudentNames();
+        ArrayList<String> names = dbHelper.fetchAllStudentsNames();
         if (names.contains(dtSurname.getText().toString())) {
             dtSurname.setError("Студент с таким именем уже создан.");
             return;

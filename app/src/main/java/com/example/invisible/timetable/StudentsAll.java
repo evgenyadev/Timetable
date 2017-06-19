@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.invisible.timetable.database.DBHelper;
+import com.example.invisible.timetable.utils.MenuFix;
 
 import java.util.ArrayList;
 
@@ -20,16 +25,17 @@ import java.util.ArrayList;
 
 public class StudentsAll extends AppCompatActivity implements View.OnClickListener {
 
-    final int DIALOG_DEL = 1;
+    private final int DIALOG_DEL = 1;
+    private final int DIALOG_DEL_ALL = 2;
 
-    DBHelper dbHelper;
+    private DBHelper dbHelper;
 
-    Button btn_to_add_activity;
-    Button btn_edit;
-    Button btn_delete;
+    private Button btn_edit;
+    private Button btn_delete;
 
-    Spinner spinnerStudents;
-    DialogInterface.OnClickListener dListener = new DialogInterface.OnClickListener() {
+    private Spinner spinnerStudents;
+
+    private final DialogInterface.OnClickListener delListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
@@ -45,6 +51,38 @@ public class StudentsAll extends AppCompatActivity implements View.OnClickListen
         }
     };
 
+    private final DialogInterface.OnClickListener delAllListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case Dialog.BUTTON_POSITIVE:
+                    dbHelper.wipeStudents();
+                    Toast.makeText(StudentsAll.this, "Все ученики удалены.", Toast.LENGTH_SHORT).show();
+                    fillSpinnerItems();
+                    break;
+                case Dialog.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_students_all, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_wipe_students:
+                showDialog(DIALOG_DEL_ALL);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +91,9 @@ public class StudentsAll extends AppCompatActivity implements View.OnClickListen
         setTitle("All students");
 
         dbHelper = new DBHelper(this);
+        MenuFix.show3Dots(this);
 
-        btn_to_add_activity = (Button) findViewById(R.id.btn_to_add_activity);
+        Button btn_to_add_activity = (Button) findViewById(R.id.btn_to_add_activity);
         btn_edit = (Button) findViewById(R.id.btn_edit);
         btn_delete = (Button) findViewById(R.id.btn_delete);
         spinnerStudents = (Spinner) findViewById(R.id.spinnerStudents);
@@ -68,7 +107,7 @@ public class StudentsAll extends AppCompatActivity implements View.OnClickListen
 
     private void fillSpinnerItems() {
         // запрос имен учеников
-        ArrayList<String> names = dbHelper.fetchAllStudentNames();
+        ArrayList<String> names = dbHelper.fetchAllStudentsNames();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,8 +130,17 @@ public class StudentsAll extends AppCompatActivity implements View.OnClickListen
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb.setTitle("Внимание!");
             adb.setMessage("");
-            adb.setPositiveButton("ДА", dListener);
-            adb.setNegativeButton("НЕТ", dListener);
+            adb.setPositiveButton("ДА", delListener);
+            adb.setNegativeButton("ОТМЕНА", delListener);
+            adb.setIcon(android.R.drawable.ic_notification_clear_all);
+            return adb.create();
+        }
+        if (id == DIALOG_DEL_ALL) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            adb.setTitle("Внимание!");
+            adb.setMessage("Удалить всех учеников?");
+            adb.setPositiveButton("ДА", delAllListener);
+            adb.setNegativeButton("ОТМЕНА", delAllListener);
             adb.setIcon(android.R.drawable.ic_notification_clear_all);
             return adb.create();
         }
@@ -128,6 +176,12 @@ public class StudentsAll extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+        // восстановить позицию в выпадающем списке
+        int prePos = spinnerStudents.getSelectedItemPosition(); // запомнить текущую позицию
+        int preCount = spinnerStudents.getCount();              // общее кол-во в списке
         fillSpinnerItems();
+        int postCount = spinnerStudents.getCount();             // общее количество после действий
+        if (preCount == postCount)                              // если не добавился новый -
+            spinnerStudents.setSelection(prePos);               // - вернуть текущий элем.
     }
 }

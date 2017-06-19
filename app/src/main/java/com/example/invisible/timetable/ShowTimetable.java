@@ -1,6 +1,8 @@
 package com.example.invisible.timetable;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -9,6 +11,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.invisible.timetable.database.DBHelper;
+import com.example.invisible.timetable.tablestruct.Day;
+import com.example.invisible.timetable.tablestruct.Lesson;
+import com.example.invisible.timetable.tablestruct.Student;
+import com.example.invisible.timetable.tablestruct.Timetable;
+
 import java.util.ArrayList;
 
 /**
@@ -16,44 +24,55 @@ import java.util.ArrayList;
  */
 
 public class ShowTimetable extends AppCompatActivity {
-    TableLayout tlShowTimetable;
-
-    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_timetable);
 
-        tlShowTimetable = (TableLayout) findViewById(R.id.tlShowTimetable);
+        TableLayout tlShowTimetable = (TableLayout) findViewById(R.id.tlShowTimetable);
 
-        dbHelper = new DBHelper(this);
+        DBHelper dbHelper = new DBHelper(this);
 
-        ArrayList<Student> students = dbHelper.fetchAllStudents();
+        // -- text color --
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = this.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+        @ColorInt int textColor = typedValue.data;
+        // -----------------
+
+        ArrayList<Student> students = dbHelper.fetchAllStudentsData();
+        Student sensei = dbHelper.fetchStudentData("Сенсей");
         if (students.isEmpty())
-            Toast.makeText(ShowTimetable.this, "Необходимо добавить студентов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShowTimetable.this, "Необходимо добавить учеников", Toast.LENGTH_SHORT).show();
 
         // Скопировать всю информацию из бд в таблицу
-        Timetable rawtable = new Timetable(students);
-        // Создать окончательную таблицу
-        Timetable timetable = rawtable.makeFinalTimetable();
+        Timetable table = new Timetable(students, sensei);
+        // Оставить только по одному студенту на один урок (убрать лишних)
+        table.arrangeByPriority();
+
+        //
+        for (Student st : table.getNoRoomStudentsList()) {
+            Toast.makeText(this, "Не хватило места для " + st.getName(), Toast.LENGTH_SHORT).show();
+        }
 
         // Вывод таблицы
-        for (int row = Lesson.LESSON_1_1; row <= Lesson.LESSON_6_2; row++) {
+        for (int row = Lesson.FIRST; row <= Lesson.LAST; row++) {
             TableRow tlRow = new TableRow(this);
-            for (int column = Day.MONDAY; column <= Day.SATURDAY; column++) {
+            for (int column = Day.FIRST; column <= Day.LAST; column++) {
                 TextView tv = new TextView(this);
                 // раскрасить таблицу серой сеткой
                 if (column % 2 == 0 && row % 2 == 0)
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorColumn1));
+                    tv.setBackgroundColor(getResources().getColor(R.color.LightGray));
                 if (column % 2 != 0 && row % 2 != 0)
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorColumn1));
+                    tv.setBackgroundColor(getResources().getColor(R.color.LightGray));
 
-                tv.setText(timetable.getStringCell(column, row));
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                tv.setText(table.getStringCell(column, row));
+                tv.setTextColor(textColor);
                 tv.setGravity(Gravity.LEFT);
                 tlRow.addView(tv);
             }
+            assert tlShowTimetable != null;
             tlShowTimetable.addView(tlRow);
         }
     }

@@ -20,7 +20,7 @@
                 android:layout_column="1"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Пн"
+                android:text="@string/days_mon"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -29,7 +29,7 @@
                 android:layout_column="2"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Вт"
+                android:text="@string/days.tue"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Ср"
+                android:text="@string/days_wed"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Чт"
+                android:text="@string/days.thu"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Пт"
+                android:text="@string/days.fri"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Сб"
+                android:text="@string/days.sat"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
 
@@ -76,46 +76,46 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btn_1_1"
+                android:id="@+id/btn_general_1_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пн I" />
+                android:text="@string/days.mon.I" />
 
             <Button
-                android:id="@+id/btn_1_2"
+                android:id="@+id/btn_general_1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Вт I" />
+                android:text="@string/days.tue.II" />
 
             <Button
-                android:id="@+id/btn_1_3"
+                android:id="@+id/btn_general_1_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Ср I" />
+                android:text="@string/days.wed.I" />
 
             <Button
-                android:id="@+id/btn_1_4"
+                android:id="@+id/btn_general_1_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Чт I" />
+                android:text="@string/days.thu.I" />
 
             <Button
-                android:id="@+id/btn_1_5"
+                android:id="@+id/btn_general_1_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пт I" />
+                android:text="@string/days.fri.I" />
 
             <Button
-                android:id="@+id/btn_1_6"
+                android:id="@+id/btn_general_1_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Сб I" />
+                android:text="@string/days.sat.I" />
         </TableRow>
 
         <TableRow
@@ -125,50 +125,50 @@
             <TextView
                 android:layout_column="0"
                 android:gravity="center_vertical"
-                android:text="II"
+                android:text="@string/num.II"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btn_2_1"
+                android:id="@+id/btn_general_2_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пн II" />
+                android:text="@string/days.mon.II" />
 
             <Button
-                android:id="@+id/btn_2_2"
+                android:id="@+id/btn_general_2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Вт II" />
+                android:text="@string/days.tue.II" />
 
             <Button
-                android:id="@+id/btn_2_3"
+                android:id="@+id/btn_general_2_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Ср II" />
+                android:text="@string/days.wed.II" />
 
             <Button
-                android:id="@+id/btn_2_4"
+                android:id="@+id/btn_general_2_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Чт II" />
+                android:text="@string/days.thu.II" />
 
             <Button
-                android:id="@+id/btn_2_5"
+                android:id="@+id/btn_general_2_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пт II" />
+                android:text="@string/days.fri.II" />
 
             <Button
-                android:id="@+id/btn_2_6"
+                android:id="@+id/btn_general_2_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Сб II" />
+                android:text="@string/days.sat.II" />
         </TableRow>
 
         <TableRow
@@ -178,50 +178,50 @@
             <TextView
                 android:layout_column="0"
                 android:gravity="center_vertical"
-                android:text="III"
+                android:text="@string/num.III"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btn_3_1"
+                android:id="@+id/btn_general_3_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пн III" />
+                android:text="@string/days.mon.III" />
 
             <Button
-                android:id="@+id/btn_3_2"
+                android:id="@+id/btn_general_3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Вт III" />
+                android:text="@string/days.tue.III" />
 
             <Button
-                android:id="@+id/btn_3_3"
+                android:id="@+id/btn_general_3_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Ср III" />
+                android:text="@string/days.wed.III" />
 
             <Button
-                android:id="@+id/btn_3_4"
+                android:id="@+id/btn_general_3_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Чт III" />
+                android:text="@string/days.thu.III" />
 
             <Button
-                android:id="@+id/btn_3_5"
+                android:id="@+id/btn_general_3_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пт III" />
+                android:text="@string/days.fri.III" />
 
             <Button
-                android:id="@+id/btn_3_6"
+                android:id="@+id/btn_general_3_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Сб III" />
+                android:text="@string/days.sat.III" />
         </TableRow>
 
         <TableRow
@@ -231,50 +231,50 @@
             <TextView
                 android:layout_column="0"
                 android:gravity="center_vertical"
-                android:text="IV"
+                android:text="@string/num.IV"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btn_4_1"
+                android:id="@+id/btn_general_4_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пн IV" />
+                android:text="@string/days.mon.IV" />
 
             <Button
-                android:id="@+id/btn_4_2"
+                android:id="@+id/btn_general_4_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Вт IV" />
+                android:text="@string/days.tue.IV" />
 
             <Button
-                android:id="@+id/btn_4_3"
+                android:id="@+id/btn_general_4_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Ср IV" />
+                android:text="@string/days.wed.IV" />
 
             <Button
-                android:id="@+id/btn_4_4"
+                android:id="@+id/btn_general_4_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Чт IV" />
+                android:text="@string/days.thu.IV" />
 
             <Button
-                android:id="@+id/btn_4_5"
+                android:id="@+id/btn_general_4_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Пт IV" />
+                android:text="@string/days.fri.IV" />
 
             <Button
-                android:id="@+id/btn_4_6"
+                android:id="@+id/btn_general_4_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Сб IV" />
+                android:text="@string/days.sat.IV" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

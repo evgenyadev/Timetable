@@ -1,4 +1,4 @@
-package com.example.invisible.timetable;
+package com.example.invisible.timetable.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,29 +8,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.example.invisible.timetable.tablestruct.Student;
 
-/**
- * Класс базы данных
- */
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "data";
-    public static final String TABLE_SCHEDULE = "schedule";
-    public static final int DATABASE_VERSION = 6;
-
-    public static final String KEY_ID = "_id";          // уникальный номер
-    public static final String KEY_NAME = "name";       // имя
-    public static final String KEY_COURSE = "course";   // курс
-    public static final String KEY_SPEC_HOURS = "speciality";   // часов специальности
-    public static final String KEY_TEACHING_PRACTICE_HOURS = "practice";    // часов педпрактики
     public static final String KEY_MON = "monday";      // дни недели
     public static final String KEY_TUE = "tuesday";     // *
     public static final String KEY_WED = "wednesday";   // *
     public static final String KEY_THU = "thursday";   // *
     public static final String KEY_FRI = "friday";      // *
     public static final String KEY_SAT = "saturday";    // //
+    public static final String DAYS[] = {KEY_MON, KEY_TUE, KEY_WED, KEY_THU, KEY_FRI, KEY_SAT};
+    private static final String DATABASE_NAME = "data";
+    private static final String TABLE_SCHEDULE = "schedule";
+    private static final int DATABASE_VERSION = 6;
+    private static final String KEY_ID = "_id";          // уникальный номер
+    private static final String KEY_NAME = "name";       // имя
+    private static final String KEY_COURSE = "course";   // курс
+    private static final String KEY_SPEC_HOURS = "speciality";   // часов специальности
+    private static final String KEY_TEACHING_PRACTICE_HOURS = "practice";    // часов педпрактики
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,6 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // Заполнить новосозданную таблицу данными
 
+        // Общее расписание
         for (int i = 1; i < 5; i++) {
             ContentValues cv = new ContentValues();
             cv.put(KEY_NAME, "Общее расписание" + i);
@@ -59,6 +58,20 @@ public class DBHelper extends SQLiteOpenHelper {
             cv.put(KEY_SAT, "000000000000");
             db.insert(TABLE_SCHEDULE, null, cv);
         }
+
+        // расписание преподавателя
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME, "Сенсей");
+        cv.put(KEY_COURSE, 5);
+        cv.put(KEY_SPEC_HOURS, 0);
+        cv.put(KEY_TEACHING_PRACTICE_HOURS, 0);
+        cv.put(KEY_MON, "000000000000");
+        cv.put(KEY_TUE, "000000000000");
+        cv.put(KEY_WED, "000000000000");
+        cv.put(KEY_THU, "000000000000");
+        cv.put(KEY_FRI, "000000000000");
+        cv.put(KEY_SAT, "000000000000");
+        db.insert(TABLE_SCHEDULE, null, cv);
     }
 
     @Override
@@ -74,50 +87,18 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = database.query(TABLE_SCHEDULE, null, KEY_NAME + " = \"" + name + "\"", null, null, null, null);
         try {
             if (cursor.moveToFirst()) {
-                student._id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-                student.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
-                student.course = cursor.getInt(cursor.getColumnIndex(KEY_COURSE));
-                student.specialityHours = cursor.getInt(cursor.getColumnIndex(KEY_SPEC_HOURS));
-                student.practiceHours = cursor.getInt(cursor.getColumnIndex(KEY_TEACHING_PRACTICE_HOURS));
+                student.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                student.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+                student.setCourse(cursor.getInt(cursor.getColumnIndex(KEY_COURSE)));
+                student.setSpecialityHours(cursor.getInt(cursor.getColumnIndex(KEY_SPEC_HOURS)));
+                student.setPracticeHours(cursor.getInt(cursor.getColumnIndex(KEY_TEACHING_PRACTICE_HOURS)));
 
-                student.schedule.put(KEY_MON, cursor.getString(cursor.getColumnIndex(KEY_MON)));
-                student.schedule.put(KEY_TUE, cursor.getString(cursor.getColumnIndex(KEY_TUE)));
-                student.schedule.put(KEY_WED, cursor.getString(cursor.getColumnIndex(KEY_WED)));
-                student.schedule.put(KEY_THU, cursor.getString(cursor.getColumnIndex(KEY_THU)));
-                student.schedule.put(KEY_FRI, cursor.getString(cursor.getColumnIndex(KEY_FRI)));
-                student.schedule.put(KEY_SAT, cursor.getString(cursor.getColumnIndex(KEY_SAT)));
+                for (String day : DBHelper.DAYS) {
+                    student.setDaySchedule(day, cursor.getString(cursor.getColumnIndex(day)));
+                }
             }
         } catch (Exception e) {
-            Log.d("debug", "DBhelper.fetchStudentData(String): Error while trying get data from database");
-        } finally {
-            if (cursor != null && !cursor.isClosed())
-                cursor.close();
-        }
-        return student;
-    }
-
-    @Deprecated
-    public Student fetchStudentData(int _id) {
-        Student student = new Student();
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.query(TABLE_SCHEDULE, null, KEY_ID + " = " + _id, null, null, null, null);
-        try {
-            if (cursor.moveToFirst()) {
-                student._id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-                student.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
-                student.course = cursor.getInt(cursor.getColumnIndex(KEY_COURSE));
-                student.specialityHours = cursor.getInt(cursor.getColumnIndex(KEY_SPEC_HOURS));
-                student.practiceHours = cursor.getInt(cursor.getColumnIndex(KEY_TEACHING_PRACTICE_HOURS));
-
-                student.schedule.put(KEY_MON, cursor.getString(cursor.getColumnIndex(KEY_MON)));
-                student.schedule.put(KEY_TUE, cursor.getString(cursor.getColumnIndex(KEY_TUE)));
-                student.schedule.put(KEY_WED, cursor.getString(cursor.getColumnIndex(KEY_WED)));
-                student.schedule.put(KEY_THU, cursor.getString(cursor.getColumnIndex(KEY_THU)));
-                student.schedule.put(KEY_FRI, cursor.getString(cursor.getColumnIndex(KEY_FRI)));
-                student.schedule.put(KEY_SAT, cursor.getString(cursor.getColumnIndex(KEY_SAT)));
-            }
-        } catch (Exception e) {
-            Log.d("debug", "DBhelper.fetchStudentData(int): Error while trying get data from database");
+            Log.d("debug", "DBHelper.fetchStudentData(String): Error while trying get data from database");
         } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
@@ -126,33 +107,30 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Получить всю информацию о всех студентах
-    public ArrayList<Student> fetchAllStudents() {
+    public ArrayList<Student> fetchAllStudentsData() {
         ArrayList<Student> allStudents = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.query(TABLE_SCHEDULE, null, KEY_ID + " > 4", null, null, null, null);
+        Cursor cursor = database.query(TABLE_SCHEDULE, null, KEY_ID + " > 5", null, null, null, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
                     Student student = new Student();
 
-                    student._id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-                    student.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
-                    student.course = cursor.getInt(cursor.getColumnIndex(KEY_COURSE));
-                    student.specialityHours = cursor.getInt(cursor.getColumnIndex(KEY_SPEC_HOURS));
-                    student.practiceHours = cursor.getInt(cursor.getColumnIndex(KEY_TEACHING_PRACTICE_HOURS));
+                    student.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    student.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+                    student.setCourse(cursor.getInt(cursor.getColumnIndex(KEY_COURSE)));
+                    student.setSpecialityHours(cursor.getInt(cursor.getColumnIndex(KEY_SPEC_HOURS)));
+                    student.setPracticeHours(cursor.getInt(cursor.getColumnIndex(KEY_TEACHING_PRACTICE_HOURS)));
 
-                    student.schedule.put(KEY_MON, cursor.getString(cursor.getColumnIndex(KEY_MON)));
-                    student.schedule.put(KEY_TUE, cursor.getString(cursor.getColumnIndex(KEY_TUE)));
-                    student.schedule.put(KEY_WED, cursor.getString(cursor.getColumnIndex(KEY_WED)));
-                    student.schedule.put(KEY_THU, cursor.getString(cursor.getColumnIndex(KEY_THU)));
-                    student.schedule.put(KEY_FRI, cursor.getString(cursor.getColumnIndex(KEY_FRI)));
-                    student.schedule.put(KEY_SAT, cursor.getString(cursor.getColumnIndex(KEY_SAT)));
+                    for (String day : DBHelper.DAYS) {
+                        student.setDaySchedule(day, cursor.getString(cursor.getColumnIndex(day)));
+                    }
 
                     allStudents.add(student);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("debug", "DBhelper.fetchAllStudents(): Error while trying get data from database");
+            Log.d("debug", "DBHelper.fetchAllStudentsData(): Error while trying get data from database");
         } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
@@ -168,7 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             database.update(TABLE_SCHEDULE, cv, KEY_ID + " = " + _id, null);
         } catch (Exception e) {
-            Log.d("debug", "DBhelper.updateDayValue(int,String): error while trying update row");
+            Log.d("debug", "DBHelper.updateDayValue(int,String,String): error while trying update row");
         }
     }
 
@@ -178,16 +156,16 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             database.delete(TABLE_SCHEDULE, KEY_NAME + " = \"" + name + "\"", null);
         } catch (Exception e) {
-            Log.d("debug", "DBhelper.removeStudent(int): error while trying delete row");
+            Log.d("debug", "DBHelper.removeStudent(int): error while trying delete row");
         }
     }
 
     // Получить список уникальных имен всех студентов в базе
-    public ArrayList<String> fetchAllStudentNames() {
+    public ArrayList<String> fetchAllStudentsNames() {
         ArrayList<String> names = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
         // первые 4 записи в таблице это общее расписание занятий для всех курсов
-        Cursor cursor = database.query(TABLE_SCHEDULE, new String[]{KEY_NAME}, KEY_ID + " > 4", null, null, null, null);
+        Cursor cursor = database.query(TABLE_SCHEDULE, new String[]{KEY_NAME}, KEY_ID + " > 5", null, null, null, null);
         try {
             if (cursor.moveToFirst()) {
                 int indexName = cursor.getColumnIndex(KEY_NAME);
@@ -196,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("debug", "DBhelper.fetchAllStudentsNames(): Error while trying get data from database");
+            Log.d("debug", "DBHelper.fetchAllStudentsNames(): Error while trying get data from database");
         } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
@@ -231,7 +209,25 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             database.execSQL(sql.toString());
         } catch (SQLException e) {
-            Log.d("debug", "DBhelper.wipeGeneralSchedule(): Error while wiping schedule data.");
+            Log.d("debug", "DBHelper.wipeGeneralSchedule(): Error while wiping schedule data.");
+        }
+    }
+
+    // Удалить всех студентов
+    public void wipeStudents() {
+        SQLiteDatabase database = getWritableDatabase();
+        StringBuilder sql = new StringBuilder();
+        //region DELETE FROM table_schedule WHERE _id > 5;
+        sql.append("DELETE FROM ");
+        sql.append(TABLE_SCHEDULE);
+        sql.append(" WHERE ");
+        sql.append(KEY_ID);
+        sql.append(" > 5");
+        //endregion
+        try {
+            database.execSQL(sql.toString());
+        } catch (SQLException e) {
+            Log.d("debug", "DBHelper.wipeStudents(): Error while wiping students. \n " + e.getMessage());
         }
     }
 
@@ -273,7 +269,19 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             database.execSQL(sqlQuery.toString());
         } catch (SQLException e) {
-            Log.d("debug", "DBhelper.insertStudent(): Error while trying insert data with raw request.");
+            Log.d("debug", "DBHelper.insertStudent(): Error while trying insert data with raw request.");
+        }
+    }
+
+    // Обновить количество часов специальности у заданного студента
+    public void updateSpecHours(int _id, int value) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_SPEC_HOURS, value);
+        try {
+            database.update(TABLE_SCHEDULE, cv, KEY_ID + " = " + _id, null);
+        } catch (Exception e) {
+            Log.d("debug", "DBHelper.updateSpecHours(int,int): error while trying update row");
         }
     }
 }

@@ -32,6 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tvPractice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
         android:spinnerMode="dropdown" />
 
     <Spinner
+        android:visibility="gone"
         android:id="@+id/spinnerPractice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

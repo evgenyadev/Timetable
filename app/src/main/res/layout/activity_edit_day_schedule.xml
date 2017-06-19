@@ -14,10 +14,11 @@
         android:layout_alignLeft="@+id/tvStudentEdit"
         android:layout_alignStart="@+id/tvStudentEdit"
         android:layout_below="@+id/tvStudentEdit"
+        android:layout_marginBottom="2dp"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_08_30_09_15" />
+        android:text="@string/interface.lesson.first" />
 
     <Button
         android:id="@+id/btn_lesson_1_2"
@@ -25,12 +26,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStudentEdit"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/btn_lesson_1_1"
         android:layout_toRightOf="@+id/btn_lesson_1_1"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_09_20_10_05" />
+        android:text="@string/interface.lesson.second" />
 
     <TextView
         android:id="@+id/tvStudentEdit"
@@ -49,23 +52,26 @@
         android:layout_alignLeft="@+id/btn_lesson_1_1"
         android:layout_alignStart="@+id/btn_lesson_1_1"
         android:layout_below="@+id/btn_lesson_1_1"
+        android:layout_marginBottom="2dp"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_10_20_11_05" />
+        android:text="@string/interface.lesson.third" />
 
     <Button
         android:id="@+id/btn_lesson_2_2"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_lesson_1_2"
-        android:layout_toEndOf="@+id/btn_lesson_2_1"
-        android:layout_toRightOf="@+id/btn_lesson_2_1"
         android:background="@android:color/holo_green_dark"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_11_10_11_55" />
+        android:text="@string/interface.lesson.fourth"
+        android:layout_below="@+id/btn_lesson_1_2"
+        android:layout_toRightOf="@+id/btn_lesson_1_1"
+        android:layout_toEndOf="@+id/btn_lesson_1_1" />
 
     <Button
         android:id="@+id/btn_lesson_3_1"
@@ -75,10 +81,11 @@
         android:layout_alignLeft="@+id/btn_lesson_2_1"
         android:layout_alignStart="@+id/btn_lesson_2_1"
         android:layout_below="@+id/btn_lesson_2_1"
+        android:layout_marginBottom="2dp"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_12_10_12_55" />
+        android:text="@string/interface.lesson.fifth" />
 
     <Button
         android:id="@+id/btn_lesson_3_2"
@@ -86,12 +93,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_lesson_2_2"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/btn_lesson_3_1"
         android:layout_toRightOf="@+id/btn_lesson_3_1"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_13_00_13_45" />
+        android:text="@string/interface.lesson.sixth" />
 
     <Button
         android:id="@+id/btn_lesson_4_1"
@@ -101,10 +110,11 @@
         android:layout_alignLeft="@+id/btn_lesson_3_1"
         android:layout_alignStart="@+id/btn_lesson_3_1"
         android:layout_below="@+id/btn_lesson_3_1"
+        android:layout_marginBottom="2dp"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_14_10_14_55" />
+        android:text="@string/interface.lesson.seventh" />
 
     <Button
         android:id="@+id/btn_lesson_4_2"
@@ -112,12 +122,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_lesson_3_2"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/btn_lesson_4_1"
         android:layout_toRightOf="@+id/btn_lesson_4_1"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_15_00_15_45" />
+        android:text="@string/interface.lesson.eighth" />
 
     <Button
         android:id="@+id/btn_lesson_5_1"
@@ -127,10 +139,11 @@
         android:layout_alignLeft="@+id/btn_lesson_4_1"
         android:layout_alignStart="@+id/btn_lesson_4_1"
         android:layout_below="@+id/btn_lesson_4_1"
+        android:layout_marginBottom="2dp"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_15_55_16_40" />
+        android:text="@string/interface.lesson.ninth" />
 
     <Button
         android:id="@+id/btn_lesson_5_2"
@@ -138,12 +151,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_lesson_4_2"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/btn_lesson_5_1"
         android:layout_toRightOf="@+id/btn_lesson_5_1"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_16_45_17_30" />
+        android:text="@string/interface.lesson.tenth" />
 
     <Button
         android:id="@+id/btn_lesson_6_1"
@@ -156,7 +171,7 @@
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_17_30_18_15" />
+        android:text="@string/interface.lesson.eleventh" />
 
     <Button
         android:id="@+id/btn_lesson_6_2"
@@ -164,12 +179,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_lesson_5_2"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/btn_lesson_6_1"
         android:layout_toRightOf="@+id/btn_lesson_6_1"
         android:background="@android:color/holo_green_dark"
         android:minHeight="30dp"
         android:minWidth="100dp"
-        android:text="@string/_18_20_19_05" />
+        android:text="@string/interface.lesson.twelfth" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -177,7 +193,7 @@
         android:layout_alignBaseline="@+id/btn_lesson_1_1"
         android:layout_toLeftOf="@+id/btn_lesson_1_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_1"
+        android:text="@string/numeric.1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -186,7 +202,7 @@
         android:layout_alignBaseline="@+id/btn_lesson_2_1"
         android:layout_toLeftOf="@+id/btn_lesson_2_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_2"
+        android:text="@string/numeric.2"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -195,7 +211,7 @@
         android:layout_alignBaseline="@+id/btn_lesson_3_1"
         android:layout_toLeftOf="@+id/btn_lesson_3_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_3"
+        android:text="@string/numeric.3"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -204,7 +220,7 @@
         android:layout_alignBaseline="@+id/btn_lesson_4_1"
         android:layout_toLeftOf="@+id/btn_lesson_4_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_4"
+        android:text="@string/numeric.4"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -213,7 +229,7 @@
         android:layout_alignBaseline="@+id/btn_lesson_5_1"
         android:layout_toLeftOf="@+id/btn_lesson_5_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_5"
+        android:text="@string/numeric.5"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -222,6 +238,6 @@
         android:layout_alignBaseline="@+id/btn_lesson_6_1"
         android:layout_toLeftOf="@+id/btn_lesson_6_1"
         android:layout_toStartOf="@+id/btn_lesson_1_1"
-        android:text="@string/_6"
+        android:text="@string/numeric.6"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>

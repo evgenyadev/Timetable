@@ -7,91 +7,93 @@
     tools:context=".StudentSchedule">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mon"
         android:id="@+id/btn_mon"
-        android:layout_below="@+id/tvStudentEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvStudentEdit"
-        android:layout_alignStart="@+id/tvStudentEdit" />
+        android:layout_alignStart="@+id/tvStudentEdit"
+        android:layout_below="@+id/tvStudentEdit"
+        android:text="@string/mon" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tue"
         android:id="@+id/btn_tue"
-        android:layout_below="@+id/btn_mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_mon"
-        android:layout_alignStart="@+id/btn_mon" />
+        android:layout_alignStart="@+id/btn_mon"
+        android:layout_below="@+id/btn_mon"
+        android:text="@string/tue" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wed"
         android:id="@+id/btn_wed"
-        android:layout_below="@+id/btn_tue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_tue"
-        android:layout_alignStart="@+id/btn_tue" />
+        android:layout_alignStart="@+id/btn_tue"
+        android:layout_below="@+id/btn_tue"
+        android:text="@string/wed" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/thu"
         android:id="@+id/btn_thu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btn_mon"
+        android:layout_toEndOf="@+id/btn_mon"
         android:layout_toRightOf="@+id/btn_mon"
-        android:layout_toEndOf="@+id/btn_mon" />
+        android:text="@string/thu" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fri"
         android:id="@+id/btn_fri"
-        android:layout_above="@+id/btn_wed"
-        android:layout_toRightOf="@+id/btn_tue"
-        android:layout_toEndOf="@+id/btn_tue" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sat"
+        android:layout_above="@+id/btn_wed"
+        android:layout_toEndOf="@+id/btn_tue"
+        android:layout_toRightOf="@+id/btn_tue"
+        android:text="@string/fri" />
+
+    <Button
         android:id="@+id/btn_sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btn_wed"
+        android:layout_toEndOf="@+id/btn_wed"
         android:layout_toRightOf="@+id/btn_wed"
-        android:layout_toEndOf="@+id/btn_wed" />
+        android:text="@string/sat" />
 
     <TextView
+        android:id="@+id/tvStudentEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:text="Фамилия И., № курс"
-        android:id="@+id/tvStudentEdit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="26dp"
         android:layout_marginStart="26dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:text="Фамилия И., № курс" />
 
     <TextView
+        android:id="@+id/tvSpecHour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:text="spec hours"
-        android:id="@+id/tvSpecHour"
+        android:layout_alignTop="@+id/btn_thu"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_alignTop="@+id/btn_thu"
+        android:layout_toEndOf="@+id/btn_thu"
         android:layout_toRightOf="@+id/btn_thu"
-        android:layout_toEndOf="@+id/btn_thu" />
+        android:onClick="onSpecViewClick"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:text="spec hours" />
 
     <TextView
+        android:id="@+id/tvPracHour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:text="practice hours"
-        android:id="@+id/tvPracHour"
         android:layout_above="@+id/btn_fri"
         android:layout_alignLeft="@+id/tvSpecHour"
-        android:layout_alignStart="@+id/tvSpecHour" />
+        android:layout_alignStart="@+id/tvSpecHour"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"
+        tools:text="practice hours" />
 
 </RelativeLayout>

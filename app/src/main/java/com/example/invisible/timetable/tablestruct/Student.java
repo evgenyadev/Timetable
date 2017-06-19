@@ -1,4 +1,6 @@
-package com.example.invisible.timetable;
+package com.example.invisible.timetable.tablestruct;
+
+import com.example.invisible.timetable.database.DBHelper;
 
 import java.util.HashMap;
 
@@ -11,37 +13,85 @@ import java.util.HashMap;
  */
 
 public class Student {
-    // Массив названий дней недели
-    final String[] daysKey = {DBHelper.KEY_MON, DBHelper.KEY_TUE, DBHelper.KEY_WED
-            , DBHelper.KEY_THU, DBHelper.KEY_FRI, DBHelper.KEY_SAT};
-    final String dayValue = "000000000000"; // 12 bit
 
-    public int _id;
-    public String name;
-    public int course;
-    public int specialityHours;
-    public int practiceHours;
-    HashMap<String, String> schedule;
+    private String name;
+    private int _id;
+    private int course;
+    private int specialityHours;
+    private int practiceHours;
+    private final HashMap<String, String> schedule;
 
     public Student() {
         // инициализация стд. значениями
         this._id = 0;
-        this.name = "Undefined";
+        this.name = "undefined";
         this.course = 0;
         this.specialityHours = 0;
         this.practiceHours = 0;
 
         // инициализация инд. расписания нулями
-        schedule = new HashMap<>();
-        for (String elem : daysKey) {
-            schedule.put(elem, dayValue);
+        this.schedule = new HashMap<>();
+        for (String elem : DBHelper.DAYS) {
+            String DAY_VALUE = "000000000000";
+            this.schedule.put(elem, DAY_VALUE);
         }
     }
 
+    Student(String _name) {
+        // инициализация стд. значениями
+        this();
+        this.name = _name;
+    }
+    // конструктор копирования
+    Student(Student _student) {
+        this.name = _student.name;
+        this._id = _student._id;
+        this.course = _student.course;
+        this.specialityHours = _student.specialityHours;
+        this.practiceHours = _student.practiceHours;
+        this.schedule = _student.schedule;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public int getSpecialityHours() {
+        return specialityHours;
+    }
+
+    public void setSpecialityHours(int specialityHours) {
+        this.specialityHours = specialityHours;
+    }
+
+    public void increaseSpecialityHours() {
+        this.specialityHours++;
+    }
+
+    public void setPracticeHours(int practiceHours) {
+        this.practiceHours = practiceHours;
+    }
+
     public String getDaySchedule(String day) throws IllegalArgumentException {
-        for (String elem : daysKey) {
+        for (String elem : DBHelper.DAYS) {
             if (elem.equals(day))
-                return schedule.get(day);
+                return this.schedule.get(day);
         }
         throw new IllegalArgumentException("There's no Day in case like \'" + day + "\'");
     }
@@ -50,7 +100,7 @@ public class Student {
         if (value.length() != 12)
             throw new IllegalArgumentException("Length of \'value\' should be 12");
 
-        for (String elem : daysKey) {
+        for (String elem : DBHelper.DAYS) {
             if (elem.equals(day)) {
                 this.schedule.put(day, value);
                 return;

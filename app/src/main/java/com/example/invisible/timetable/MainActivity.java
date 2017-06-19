@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Суть:            составление расписания уроков для преподавателя в училище - трудоемкий процесс.
@@ -26,19 +25,14 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    final int DIALOG_CLEAR = 1;
+    private final int DIALOG_EXIT = 2;
 
-    //Buttons
-    Button btnToStudentsActivity, btnClearGeneralSchedule, btnToScheduleActivity, btnShowTimetable;
-
-    DBHelper dbHelper;
-    DialogInterface.OnClickListener dListener = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener exitDlgListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case Dialog.BUTTON_POSITIVE:
-                    dbHelper.wipeGeneralSchedule();
-                    Toast.makeText(MainActivity.this, "Общее расписание очищено.", Toast.LENGTH_SHORT).show();
+                    finish();
                     break;
                 case Dialog.BUTTON_NEGATIVE:
                     break;
@@ -51,33 +45,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new DBHelper(this);
-
         //Find elements by id
-        btnToStudentsActivity = (Button) findViewById(R.id.btnToStudentsActivity);
-        btnClearGeneralSchedule = (Button) findViewById(R.id.btnClearGeneralSchedule);
-        btnToScheduleActivity = (Button) findViewById(R.id.btnToScheduleActivity);
-        btnShowTimetable = (Button) findViewById(R.id.btnShowTimetable);
+        Button btnToStudentsActivity = (Button) findViewById(R.id.btnToStudentsActivity);
+        Button btnToScheduleActivity = (Button) findViewById(R.id.btnToScheduleActivity);
+        Button btnShowTimetable = (Button) findViewById(R.id.btnShowTimetable);
+        Button btnToSenseiSchedule = (Button) findViewById(R.id.btnToSenseiSchedule);
 
         //Add listeners
         btnToScheduleActivity.setOnClickListener(this);
-        btnClearGeneralSchedule.setOnClickListener(this);
         btnToStudentsActivity.setOnClickListener(this);
         btnShowTimetable.setOnClickListener(this);
+        btnToSenseiSchedule.setOnClickListener(this);
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_CLEAR) {
+        if (id == DIALOG_EXIT) {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            adb.setTitle("Внимание!");
-            adb.setMessage("Полностью очистить общее расписание?");
-            adb.setIcon(android.R.drawable.ic_notification_clear_all);
-            adb.setPositiveButton("Да", dListener);
-            adb.setNegativeButton("Нет", dListener);
+            adb.setTitle("Выйти?");
+            adb.setMessage("Закрыть приложение?");
+            adb.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+            adb.setPositiveButton("Да", exitDlgListener);
+            adb.setNegativeButton("Нет", exitDlgListener);
             return adb.create();
         }
         return super.onCreateDialog(id);
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialog(DIALOG_EXIT);
     }
 
     @Override
@@ -89,14 +86,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intentSchedule = new Intent(this, GeneralSchedule.class);
                 startActivity(intentSchedule);
                 break;
-            // Очистить общее расписание
-            case R.id.btnClearGeneralSchedule:
-                showDialog(DIALOG_CLEAR);
-                break;
             // Все студенты и доб./ред./уд. новых
             case R.id.btnToStudentsActivity:
                 Intent intentStudents = new Intent(this, StudentsAll.class);
                 startActivity(intentStudents);
+                break;
+            // Sensei schedule
+            case R.id.btnToSenseiSchedule:
+                Intent intentSensei = new Intent(this, StudentSchedule.class);
+                intentSensei.putExtra("name", "Сенсей");
+                startActivity(intentSensei);
                 break;
             // Генерация расписания
             case R.id.btnShowTimetable:

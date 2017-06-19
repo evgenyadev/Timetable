@@ -1,8 +1,11 @@
-package com.example.invisible.timetable;
+package com.example.invisible.timetable.tablestruct;
 
 import android.util.Log;
 
+import com.example.invisible.timetable.database.DBHelper;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -11,17 +14,16 @@ import java.util.HashSet;
  * содержит информацию о 12 уроках в этот день, каждый может содержать информацию о студентах этого урока
  */
 
-public class Timetable {
+public class Timetable implements Arranger {
 
     // main table
     private ArrayList<Day> table;
-    // statistics and priority students
-    private HashMap<String, Integer> specialityCount;
-    private HashMap<String, Integer> studentAllPriority;
-    private HashMap<String, HashMap<String, Integer>> studentDayPriority;
+    private ArrayList<StudentStat> statStudents;
+    private ArrayList<Student> noRoomStudents;
+    private Student senseiStudent;
 
     // Создать пустую таблицу
-    public Timetable() {
+    private Timetable() {
         try {
             this.createStructure();
         } catch (Exception e) {
@@ -30,13 +32,16 @@ public class Timetable {
     }
 
     // Создать таблицу на основе данных о студентах из БД
-    public Timetable(ArrayList<Student> students) {
+    public Timetable(ArrayList<Student> _students, Student _sensei) {
         this.createStructure();
 
+        senseiStudent = _sensei;
+
         try {
-            if (!students.isEmpty())
-                for (Student currStudent : students) {
-                    addToTable(currStudent);
+            if (!_students.isEmpty())
+                for (Student currStudent : _students) {
+                    statStudents.add(0, new StudentStat(currStudent));
+                    addStudentToTable(statStudents.get(0));
                 }
         } catch (Exception e) {
             Log.d("debug", "Timetable:Timetable(ArrayList<>) error while add students to table");
@@ -45,12 +50,11 @@ public class Timetable {
 
     // Создает скелет таблицы
     private void createStructure() {
-        specialityCount = new HashMap<>();
-        studentAllPriority = new HashMap<>();
-        studentDayPriority = new HashMap<>();
 
         // создать структуру таблицы, в процессе работы структура статична, 6 дней недели
         // класс Day сам создает свою структуру
+        this.statStudents = new ArrayList<>();
+        this.noRoomStudents = new ArrayList<>();
         this.table = new ArrayList<>();
         this.table.add(new Day(DBHelper.KEY_MON));
         this.table.add(new Day(DBHelper.KEY_TUE));
@@ -64,158 +68,99 @@ public class Timetable {
     public String getStringCell(final int columnId, final int rowId) {
 
         if (!this.table.get(columnId).getLesson(rowId).getStudents().isEmpty())
-            return this.table.get(columnId).getLesson(rowId).getStudents().get(0).name;
+            return this.table.get(columnId).getLesson(rowId).getStudents().get(0).getName();
         else
             return "";
     }
 
     // Получить объект класса Day конкретного дня недели из таблицы
-    public Day getDay(String day) {
-        int retDay = 0;
-
-        switch (day) {
-            case DBHelper.KEY_MON:
-                retDay = 0;
-                break;
-            case DBHelper.KEY_TUE:
-                retDay = 1;
-                break;
-            case DBHelper.KEY_WED:
-                retDay = 2;
-                break;
-            case DBHelper.KEY_THU:
-                retDay = 3;
-                break;
-            case DBHelper.KEY_FRI:
-                retDay = 4;
-                break;
-            case DBHelper.KEY_SAT:
-                retDay = 5;
-                break;
-        }
-        return this.table.get(retDay);
-    }
-
-    @Deprecated
-    private String dayToStr(int day) {
-        String retDay = "";
-
-        switch (day) {
-            case 0:
-                retDay = DBHelper.KEY_MON;
-                break;
-            case 1:
-                retDay = DBHelper.KEY_TUE;
-                break;
-            case 2:
-                retDay = DBHelper.KEY_WED;
-                break;
-            case 3:
-                retDay = DBHelper.KEY_THU;
-                break;
-            case 4:
-                retDay = DBHelper.KEY_FRI;
-                break;
-            case 5:
-                retDay = DBHelper.KEY_SAT;
-                break;
-
-        }
-
-        return retDay;
+    private Day getDay(String day) {
+        return this.table.get(Arrays.asList(DBHelper.DAYS).indexOf(day));
     }
 
     // получить список студентов выбранного дня
-    public HashSet<Student> getStudentsFromDay(final String day) {
+    private HashSet<Student> getStudentsFromDay(final String day) {
 
         HashSet<Student> retStudents = new HashSet<>();
 
-        for (int lessonId = Lesson.LESSON_1_1; lessonId <= Lesson.LESSON_6_2; lessonId++) {
+        for (int lessonId = Lesson.FIRST; lessonId <= Lesson.LAST; lessonId++) {
             retStudents.addAll(this.getDay(day).getLesson(lessonId).getStudents());
         }
         return retStudents;
     }
 
     // Добавить студента в таблицу со сбором статистики
-    public void addToTable(Student student) {
+    private void addStudentToTable(StudentStat student) {
         /*
         * Метод записывает всё расписание студента за каждый день в таблицу this.table
         * Также записывает статистику свободных часов каждого студента по дням и за неделю в целом
-        * в коллекции studentDayPriority и studentAllPriority соответственно.
          */
         int prDay = 0; // свободных часов в день
         int prAll = 0; // свободных часов в неделю
 
-        final String days[] = {DBHelper.KEY_MON, DBHelper.KEY_TUE, DBHelper.KEY_WED, DBHelper.KEY_THU, DBHelper.KEY_FRI, DBHelper.KEY_SAT};
-
-        for (String day : days) {
+        for (String day : DBHelper.DAYS) {
             String daySchedule = student.getDaySchedule(day); // получить расписание одного дня
             char[] chDaySchedule = daySchedule.toCharArray(); // в массив бит
 
-            for (int lesson = Lesson.LESSON_1_1; lesson <= Lesson.LESSON_6_2; lesson++) { // смотреть все уроки за день
+            for (int lesson = Lesson.FIRST; lesson <= Lesson.LAST; lesson++) { // смотреть все уроки за день
                 if (chDaySchedule[lesson] == '0') { // если ученик в это время свободен
-                    addToTableToLesson(student, day, lesson); // то добавить его в общую таблицу
-
+                    addStudentToLesson(student, day, lesson); // то добавить его в общую таблицу
                     // подсчитать приоритет для последущей растановки в результирующей таблице
                     prDay++; // статистика свободных уроков ученика для одного дня (для приоритетов)
                 }
             }
-
-            HashMap<String, Integer> dayStat = new HashMap<>();
-            // добавить статистику для нового дня чтобы не удалив предыдущие дни
-            if (studentDayPriority.get(student.name) != null) // проверка первой записи в мэп
-                dayStat = studentDayPriority.get(student.name);
-
-            dayStat.put(day, prDay);
-            studentDayPriority.put(student.name, dayStat);
+            student.statDayPriority.put(day, prDay);
 
             prAll += prDay; // приоритеты текущего дня прибавить к приоритетам за всю неделю
             prDay = 0; // обнулить для следущего дня
         }
-        studentAllPriority.put(student.name, prAll);
+        student.statTotalPriority = prAll;
+    }
+
+    public ArrayList<Student> getNoRoomStudentsList() {
+        return this.noRoomStudents;
     }
 
     // добавить студента в таблицу на урок lesson дня недели day
-    public void addToTableToLesson(Student student, String day, int lesson) {
-
+    private void addStudentToLesson(final StudentStat student, String day, int lesson) {
         this.getDay(day).getLesson(lesson).addStudent(student);
-        // speciality statistics
-        int currSpecCount = 0;
-        if (this.specialityCount.get(student.name) != null)
-            currSpecCount = this.specialityCount.get(student.name);
-        currSpecCount++;
-        this.specialityCount.put(student.name, currSpecCount);
     }
 
-    public Timetable makeFinalTimetable() {
+    private void arrangeStudents() {
         /*
         * Главный алгоритм программы, расстановка учеников в окончательный список
         * Отсеять студентов у которых уже достаточное количество спец, или уже выставлена спец. в этот день
-        * (А именно создать новый список, дабы не менять входящие данные)
         * Найти в ячейке ученика, у которого самый высокий приоритет (наименьшее число в studentAllPriority)
         * Если общие приоритеты одинаковы, то сравнить приоритеты по текущему дню
         * Затем внести студента в новый список, в ячейке нового списка теперь будет находиться только один студент
         */
+
+        // чистая таблица для последующего переноса из неё данных
         Timetable retTable = new Timetable();
 
         // Сначала следует цикл уроков, а внутри него дней. Это необходимо для равномерного заполнения рабочей недели
-        for (int lesson = Lesson.LESSON_1_1; lesson <= Lesson.LESSON_6_2; lesson++) {
+        for (int lesson = Lesson.FIRST; lesson <= Lesson.LAST; lesson++) {
             for (Day cDay : table) {
+                // Проверить может ли преподаватель присутствовать на этом уроке
+                char[] chSenseiSchedule = senseiStudent.getDaySchedule(cDay.getName()).toCharArray();
+                if (chSenseiSchedule[lesson] == '1') {
+                    retTable.addStudentToLesson(new StudentStat("++++++"), cDay.getName(), lesson);
+                    continue;
+                }
                 // получить весь список претендентов на текущий урок
-                ArrayList<Student> allStudPretends = cDay.getLesson(lesson).getStudents();
-                if (allStudPretends.isEmpty()) // TODO: тут можно добавить отображение окон - уроки, на которые ни один студент не попадает
+                ArrayList<StudentStat> allStudOnLesson = cDay.getLesson(lesson).getStudents();
+                if (allStudOnLesson.isEmpty()) { // окна - пары на которые никто не попадает
+                    retTable.addStudentToLesson(new StudentStat("--------"), cDay.getName(), lesson);
                     continue; // никто не может попасть на этот урок, следущий день
-
+                }
                 /*
                 * В этом блоке отсеиваются студенты у которых в этот день уже есть специальность,
                 * и у которых достигнут лимит возможного количества специальностей.
                 * в clrStudList остануться студенты прошедшие отсев.
                  */
-                ArrayList<Student> clrStudList = new ArrayList<>();
-                for (Student cStud : allStudPretends) {
-                    if (retTable.specialityCount.get(cStud.name) == null)
-                        retTable.specialityCount.put(cStud.name, 0);
-                    if (retTable.specialityCount.get(cStud.name) < cStud.specialityHours      // кол-во спец. меньше положеного
+                ArrayList<StudentStat> clrStudList = new ArrayList<>();
+                for (StudentStat cStud : allStudOnLesson) {
+                    if (cStud.statSpeciality < cStud.getSpecialityHours()      // кол-во спец. меньше положеного
                             && !retTable.getStudentsFromDay(cDay.getName()).contains(cStud)) { // ещё НЕ присутствует его спец в этот день
                         clrStudList.add(cStud);
                     }
@@ -229,25 +174,50 @@ public class Timetable {
                 * если общие приоритеты равны, то сравнить приоритеты за текущий день
                 * в случае равных приоритетов, выбор студента не важен.
                  */
-                Student maxPriorityStudent = clrStudList.get(0); // Назначить первого высокоприоритетным, для дальнейших сравнений с другими
-                for (Student currStudent : clrStudList) {
-                    int curPriorityInAll = studentAllPriority.get(currStudent.name);
-                    int maxPriorityInAll = studentAllPriority.get(maxPriorityStudent.name);
-                    if (curPriorityInAll < maxPriorityInAll) // у кого меньше число - тот приоритетнее
-                        maxPriorityStudent = currStudent;
-                    else if (curPriorityInAll == maxPriorityInAll) { // если общие приоритеты равны, то сравнивать по текущему дню
-                        int curPriorityInDay = studentDayPriority.get(currStudent.name).get(cDay.getName());
-                        int maxPriorityInDay = studentDayPriority.get(maxPriorityStudent.name).get(cDay.getName());
-                        if (curPriorityInDay < maxPriorityInDay) {
-                            maxPriorityStudent = currStudent;
-                        }
-                    }
+                StudentStat maxPrStudent = clrStudList.get(0); // Назначить первого высокоприоритетным, для дальнейших сравнений с другими
+                for (StudentStat cPrStudent : clrStudList) {
+                    if (cPrStudent.statTotalPriority < maxPrStudent.statTotalPriority) // у кого меньше число - тот приоритетнее
+                        maxPrStudent = cPrStudent;
+                    else if (cPrStudent.statTotalPriority == maxPrStudent.statTotalPriority)  // если общие приоритеты равны, то сравнивать по текущему дню
+                        if (cPrStudent.statDayPriority.get(cDay.getName()) < maxPrStudent.statDayPriority.get(cDay.getName()))
+                            maxPrStudent = cPrStudent;
                 }
                 // Если алгоритм дожил до этого места, значит есть студент прошедший все проверки
                 // Добавить его в результирующую таблицу.
-                retTable.addToTableToLesson(maxPriorityStudent, cDay.getName(), lesson);
+                retTable.addStudentToLesson(maxPrStudent, cDay.getName(), lesson);
+                maxPrStudent.statSpeciality++;
             }
         }
-        return retTable;
+
+        for (StudentStat student : statStudents) {
+            if (student.statSpeciality != student.getSpecialityHours()) {
+                retTable.noRoomStudents.add(student);
+            }
+        }
+
+        // перенести вычисления
+        this.table = retTable.table;
+        this.statStudents = retTable.statStudents;
+        this.noRoomStudents = retTable.noRoomStudents;
+        this.senseiStudent = retTable.senseiStudent;
+    }
+
+    @Override
+    public void arrangeByPriority() {
+        arrangeStudents();
+    }
+
+    public class StudentStat extends Student {
+        private int statSpeciality = 0;
+        private int statTotalPriority = 0;
+        private HashMap<String, Integer> statDayPriority = new HashMap<>();
+
+        StudentStat(String _name) {
+            super(_name);
+        }
+
+        StudentStat(Student _student) {
+            super(_student);
+        }
     }
 }

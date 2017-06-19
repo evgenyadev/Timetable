@@ -1,4 +1,4 @@
-package com.example.invisible.timetable;
+package com.example.invisible.timetable.tablestruct;
 
 import java.util.ArrayList;
 
@@ -8,23 +8,19 @@ import java.util.ArrayList;
 public class Day {
 
     //region Константы дней
-    public static final int MONDAY = 0;
-    public static final int TUESDAY = 1;
-    public static final int WEDNESDAY = 2;
-    public static final int THURSDAY = 3;
-    public static final int FRIDAY = 4;
-    public static final int SATURDAY = 5;
+    public static final int FIRST = 0;
+    public static final int LAST = 5;
     //endregion
 
-    private String sId;
-    private ArrayList<Lesson> lessons;
+    private final String sId;
+    private final ArrayList<Lesson> lessons;
 
     public Day(String sId) {
         this.sId = sId;
         this.lessons = new ArrayList<>();
         // создать структуру дня, в процессе работы структура статична, 12 уроков
-        for (int i = Lesson.LESSON_1_1; i <= Lesson.LESSON_6_2; i++) {
-            this.lessons.add(new Lesson(i));
+        for (int i = Lesson.FIRST; i <= Lesson.LAST; i++) {
+            this.lessons.add(new Lesson());
         }
     }
 

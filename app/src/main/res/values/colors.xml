@@ -3,5 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorColumn1">#f1f1f1</color>
+    <color name="colorDarkBar">#000248</color>
+    <color name="colorTest">#01001d</color>
+    <color name="colorDarkAccent">#7f0f83</color>
+    <color name="LightGray">#f1f1f1</color>
 </resources>
